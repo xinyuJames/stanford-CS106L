@@ -9,12 +9,26 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <queue>
 #include <set>
 #include <string>
 #include <unordered_set>
 
-std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
+std::string kYourName = "Xinyu Liu"; // Don't forget to change this!
+
+std::vector<std::string> split(const std::string& string_to_split, char deli)
+{
+  std::vector<std::string> rtn;
+  std::stringstream ss(string_to_split);
+  std::string cur;
+  while (std::getline(ss, cur, deli))
+  {
+    rtn.push_back(cur);
+  }
+  
+  return rtn;
+}
 
 /**
  * Takes in a file name and returns a set containing all of the applicant names as a set.
@@ -29,6 +43,18 @@ std::string kYourName = "STUDENT TODO"; // Don't forget to change this!
  */
 std::set<std::string> get_applicants(std::string filename) {
   // STUDENT TODO: Implement this function.
+  std::set<std::string> rtn;
+  std::ifstream ifile;
+  ifile.open(filename);
+  std::string name;
+  
+  while (getline(ifile, name))
+  {
+    rtn.insert(name);  
+  }
+  ifile.close();
+
+  return rtn;
 }
 
 /**
@@ -41,6 +67,32 @@ std::set<std::string> get_applicants(std::string filename) {
  */
 std::queue<const std::string*> find_matches(std::string name, std::set<std::string>& students) {
   // STUDENT TODO: Implement this function.
+  std::vector<std::string> name_split;
+  std::set<std::vector<std::string>> students_split;
+  std::queue<const std::string*> rtn;
+
+  if (name.empty()) return rtn;
+  // split name
+  name_split = split(name, ' ');
+  
+  for (auto it = students.begin(); it != students.end(); ++it)
+  {
+    std::string cur = *it;
+    std::vector<std::string> cur_split = split(cur, ' ');
+    if (name_split.size() != cur_split.size()) continue;
+
+    bool match = true;
+    for (int i=0; i<name_split.size(); i++)
+    {
+      if (name_split[i][0] != cur_split[i][0]) match = false;
+    }
+
+    if (match)
+    {
+      rtn.push(&(*it));
+    }
+  }
+  return rtn;
 }
 
 /**
@@ -55,6 +107,9 @@ std::queue<const std::string*> find_matches(std::string name, std::set<std::stri
  */
 std::string get_match(std::queue<const std::string*>& matches) {
   // STUDENT TODO: Implement this function.
+  if (matches.empty()) return "NO MATCHES FOUND.";
+
+  return *matches.back();
 }
 
 /* #### Please don't remove this line! #### */
