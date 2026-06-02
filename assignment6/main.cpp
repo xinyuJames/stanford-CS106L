@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <type_traits>
 #include <vector>
+#include <optional>
+#include <assert.h>
 
 /** STUDENT_TODO: You will need to include a relevant header file here! */
 
@@ -52,10 +54,19 @@ public:
    * @param course_title The title of the course to find.
    * @return You will need to figure this out!
    */
-  FillMeIn find_course(std::string course_title)
+  std::optional<Course*> find_course(std::string course_title)
   {
     /* STUDENT_TODO: Implement this method! You will need to change the return
      * type. */
+    for (auto it=courses.begin(); it != courses.end(); it++)
+    {
+      if (it->title.compare(course_title) == 0)
+      {
+        return &(*it);
+      }
+    }
+
+    return std::nullopt;
   }
 
 private:
@@ -81,7 +92,17 @@ main(int argc, char* argv[])
     Please pay special attention to the README here
     ********************************************************/
 
-    std::string output = /* STUDENT_TODO */
+    std::string output = course
+    .transform([](const Course * const & c){ // tramsform auto wrap with optional<>, const Course* is a pointer to const Course. use <const Course* const& c> (second const is toward pointer) or <Course*&>
+      std::string rtn = "Found course: ";
+      rtn += c->title; rtn += ",";
+      rtn += c->number_of_units; rtn += ",";
+      rtn += c->quarter;
+      return rtn;
+    }).or_else([](){ // or_else no extra wrap
+      std::optional<std::string> rtn = "Course not found.";
+      return rtn;
+    }).value();
 
     /********************************************************
      DO NOT MODIFY ANYTHING BELOW THIS LINE PLEASE
