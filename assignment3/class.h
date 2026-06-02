@@ -29,6 +29,17 @@ public:
 
     // virtual functions
     virtual void play_hobby()        const = 0;
+
+    // operator overloading
+    // const func when *this may be called, friend only for non-member
+    friend bool operator < (const Student& a, const Student& b);
+    friend bool operator > (const Student& a, const Student& b);
+
+    // operator only for member
+    bool operator == (const Student& a) const;
+    Student& operator = (const Student& other);
+    // disable copy constructor
+    Student(const Student& other) = delete;
 };
 
 // if protected Student, outside cannot convert Good_Kid to Student

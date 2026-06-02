@@ -1,12 +1,9 @@
 #include "class.h"
 #include <iostream>
 
-Student::Student(std::string name, std::string gender, int number)
-{
-    this->name = name;
-    this->gender = gender;
-    this->student_number = number;
-}
+Student::Student(std::string name, std::string gender, int number) :
+name(name), gender(gender), student_number(number) {};
+
 Student::Student() {}
 
 Student::~Student()
@@ -39,6 +36,21 @@ void Student::set_gender(std::string gender)
     this->gender = gender;
 }
 
+void Student::set_student_number(int num)
+{
+    this->student_number = num;
+}
+
+bool operator < (const Student& a, const Student& b)
+{
+    return a.student_number < b.student_number;
+}
+
+bool operator > (const Student& a, const Student& b)
+{
+    return !(a<b);
+}
+
 Good_Kid::Good_Kid(
     std::string name,
     std::string gender,
@@ -46,14 +58,7 @@ Good_Kid::Good_Kid(
     
     std::string family,
     std::string hobby
-) : Student(
-    name,
-    gender,
-    number
-) {
-    this->family = family;
-    this->hobby = hobby;
-}
+) : Student(name, gender, number), family(family), hobby(hobby) {};
 
 Good_Kid::Good_Kid() : Student() {};
 
@@ -109,10 +114,7 @@ Bad_Kid::Bad_Kid(
     name,
     gender,
     number
-) {
-    this->hommie = hommie;
-    this->hobby = hobby;
-}
+), hommie(hommie), hobby(hobby) {};
 
 Bad_Kid::~Bad_Kid()
 {

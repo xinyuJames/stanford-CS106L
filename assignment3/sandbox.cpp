@@ -19,6 +19,7 @@ void sandbox() {
 
   classroom[0]->set_name("a");
   classroom[0]->set_gender("girl");
+  classroom[0]->set_student_number(5);
   
   std::cout << "===== Welcome to the class =====" << "\n";
 
@@ -28,12 +29,23 @@ void sandbox() {
 
     if (Good_Kid* gk = dynamic_cast<Good_Kid*>(stu)) gk->good_kid_stuff();
     else if (Bad_Kid* bk = dynamic_cast<Bad_Kid*>(stu)) bk->bad_kid_stuff();
+    
+    if (*stu > *(classroom[0]))
+    {
+      std::cout << stu->get_name() << " is Bigger than "
+        << classroom[0]->get_name()
+        << "\n";
+    } else
+    {
+      std::cout << stu->get_name() << " is smaller or equal than "
+        << classroom[0]->get_name()
+        << "\n";
+    }
   }
 
   for (Student * stu : classroom)
   {
     delete stu;
-
   }
 
   std::cout << "===== End the class =====" << "\n";
