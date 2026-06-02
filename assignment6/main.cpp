@@ -4,6 +4,8 @@
  * Ibanez.
  */
 
+ //TODO: lambda in transform required to have parameter.. learn to read <const Course * const & c> this shit
+
 #include <algorithm>
 #include <type_traits>
 #include <vector>

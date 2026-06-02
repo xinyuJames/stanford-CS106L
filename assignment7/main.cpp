@@ -3,6 +3,8 @@
  * Created by Jacob Roberts-Baca.
  */
 
+//TODO: back traverse, delete in move semantic (only copy value, heap allocated object for user external delete)
+
 #include <functional>
 #include <iostream>
 #include <sstream>
